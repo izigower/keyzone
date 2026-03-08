@@ -1,40 +1,59 @@
 FROM php:8.2-cli
 
-WORKDIR /app
-
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    libicu-dev \
-    libonig-dev \
     libpq-dev \
     libzip-dev \
+    libpng-dev \
+    libicu-dev \
     unzip \
+    git \
+    curl \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
-    bcmath \
-    intl \
-    mbstring \
     pdo_pgsql \
     pgsql \
+    pdo_sqlite \
     zip \
+    bcmath \
+    gd \
+    intl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY composer.json ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
+# Set working directory
+WORKDIR /var/www/html
 
+# Copy composer files first (for better Docker layer caching)
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --optimize-autoloader --no-dev --no-scripts
+
+# Copy the rest of the application
 COPY . .
 
-RUN composer dump-autoload --optimize --no-dev \
-    && php artisan package:discover --ansi \
-    && chmod +x /app/render-start.sh \
-    && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache \
+# Run post-install scripts
+RUN composer dump-autoload --optimize
+
+# Create .env from example if not present, generate key
+RUN cp .env.example .env || true
+
+# Set permissions for storage and cache
+RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-EXPOSE 10000
+# Expose port (Render sets PORT env var)
+EXPOSE 8000
 
-CMD ["./render-start.sh"]
+# Start script: clear caches, run migrations, seed, then serve
+CMD sh -c "\
+    php artisan config:clear && \
+    php artisan route:clear && \
+    php artisan view:clear && \
+    php artisan migrate --force && \
+    php artisan db:seed --force && \
+    php artisan serve --host=0.0.0.0 --port=\${PORT:-8000}"

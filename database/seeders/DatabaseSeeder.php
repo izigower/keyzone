@@ -16,6 +16,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Skip if already seeded
+        if (User::where('email', 'admin@keyzone.fr')->exists()) {
+            echo "Database already seeded, skipping...\n";
+            return;
+        }
         // ======== ADMIN USER ========
         $admin = User::create([
             'username' => 'admin',
