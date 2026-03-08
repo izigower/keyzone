@@ -31,8 +31,9 @@
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "true",
-    "APP_URL": "URL",
-    "APP_KEY": "KEY",
+    "APP_URL": "https://keyzone.vercel.app",
+    "APP_KEY": "base64:sJiIdz+H3I0akeN7hgDTpmziBxFBMEE/UQTQzgSxOG4=",
+    "LOG_CHANNEL": "stderr",
     "CACHE_STORE": "database",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
