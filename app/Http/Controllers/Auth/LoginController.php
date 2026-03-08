@@ -16,11 +16,26 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required'],
+            'email' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        // Try login with email or username
+        $fieldType = filter_var($credentials['email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $attempt = Auth::attempt(
+            [$fieldType => $credentials['email'], 'password' => $credentials['password']],
+            $request->boolean('remember')
+        );
+
+        if ($attempt) {
+            $user = Auth::user();
+
+            if (!$user->is_active) {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Votre compte a été désactivé.'])->onlyInput('email');
+            }
+
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
