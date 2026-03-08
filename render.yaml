@@ -1,9 +1,18 @@
+databases:
+  - name: keyzone-db
+    plan: free
+    databaseName: keyzone
+    user: keyzone_user
+    region: frankfurt
+
 services:
   - type: web
     name: keyzone
     runtime: docker
     plan: free
+    region: frankfurt
     dockerfilePath: ./Dockerfile
+    healthCheckPath: /up
     envVars:
       - key: APP_NAME
         value: KEYZONE
@@ -13,24 +22,34 @@ services:
         value: "false"
       - key: APP_KEY
         value: base64:RBNgoa1wug5yJgYZm118vegpfddZdULOlHCWCUA7SWI=
+      - key: APP_URL
+        value: https://keyzone.onrender.com
       - key: APP_LOCALE
         value: fr
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        sync: false
+        fromDatabase:
+          name: keyzone-db
+          property: host
       - key: DB_PORT
-        value: "6543"
+        fromDatabase:
+          name: keyzone-db
+          property: port
       - key: DB_DATABASE
-        value: postgres
+        fromDatabase:
+          name: keyzone-db
+          property: database
       - key: DB_USERNAME
-        value: postgres.prfodcjukvgnkbncwesm
+        fromDatabase:
+          name: keyzone-db
+          property: user
       - key: DB_PASSWORD
-        sync: false
-      - key: DB_SSLMODE
-        value: require
+        fromDatabase:
+          name: keyzone-db
+          property: password
       - key: SESSION_DRIVER
-        value: database
+        value: file
       - key: CACHE_STORE
         value: file
       - key: QUEUE_CONNECTION
@@ -41,3 +60,5 @@ services:
         value: noreply@keyzone.fr
       - key: MAIL_FROM_NAME
         value: KEYZONE
+      - key: LOG_CHANNEL
+        value: stderr
