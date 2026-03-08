@@ -34,8 +34,6 @@
     "APP_URL": "https://keyzone.vercel.app",
     "APP_KEY": "base64:sJiIdz+H3I0akeN7hgDTpmziBxFBMEE/UQTQzgSxOG4=",
     "LOG_CHANNEL": "stderr",
-    "DB_CONNECTION": "sqlite",
-    "DB_DATABASE": ":memory:",
     "SESSION_DRIVER": "cookie",
     "CACHE_STORE": "array",
     "APP_CONFIG_CACHE": "/tmp/config.php",
