@@ -6,25 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paiement extends Model
 {
-    protected $table = 'paiement';
-    protected $primaryKey = 'id_paiement';
-    public $timestamps = false;
-
     protected $fillable = [
-        'id_commande',
+        'commande_id',
         'montant',
-        'date_paiement',
         'methode',
         'statut',
-        'transaction_id',
+        'stripe_payment_intent_id',
+        'stripe_session_id',
     ];
 
     protected $casts = [
-        'date_paiement' => 'datetime',
+        'montant' => 'decimal:2',
     ];
 
     public function commande()
     {
-        return $this->belongsTo(Commande::class, 'id_commande', 'id_commande');
+        return $this->belongsTo(Commande::class);
     }
 }

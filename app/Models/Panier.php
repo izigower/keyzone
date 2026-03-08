@@ -6,30 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Panier extends Model
 {
-    protected $table = 'panier';
-    protected $primaryKey = 'id_panier';
-    public $timestamps = false;
+    protected $fillable = ['user_id'];
 
-    protected $fillable = [
-        'id_utilisateur',
-        'date_creation',
-        'date_modification',
-    ];
-
-    public function utilisateur()
+    public function user()
     {
-        return $this->belongsTo(Utilisateur::class, 'id_utilisateur', 'id_utilisateur');
+        return $this->belongsTo(User::class);
     }
 
     public function lignes()
     {
-        return $this->hasMany(LignePanier::class, 'id_panier', 'id_panier');
+        return $this->hasMany(LignePanier::class);
     }
 
     public function getTotalAttribute()
     {
-        return $this->lignes->sum(function($ligne) {
+        return $this->lignes->sum(function ($ligne) {
             return $ligne->produit->prix * $ligne->quantite;
         });
+    }
+
+    public function getNombreArticlesAttribute()
+    {
+        return $this->lignes->sum('quantite');
     }
 }

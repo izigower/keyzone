@@ -2,64 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produit;
+use App\Models\CategorieProduit;
+use App\Models\Plateforme;
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Données temporaires des jeux (plus tard depuis la BDD)
-        $games = [
-            [
-                'id' => 1,
-                'title' => 'Hollow Knight',
-                'slug' => 'hollow-knight',
-                'price' => '14,99',
-                'image' => 'https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg',
-                'badge' => 'Incontournable'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Bread & Fred',
-                'slug' => 'bread-fred',
-                'price' => '6,99',
-                'image' => 'https://cdn.cloudflare.steamstatic.com/steam/apps/1234560/header.jpg',
-                'badge' => null
-            ],
-            [
-                'id' => 3,
-                'title' => 'Slime Rancher 2',
-                'slug' => 'slime-rancher-2',
-                'price' => '19,99',
-                'image' => 'https://cdn.cloudflare.steamstatic.com/steam/apps/1579700/header.jpg',
-                'badge' => 'Nouveau'
-            ],
-            [
-                'id' => 4,
-                'title' => 'Animal Crossing',
-                'slug' => 'animal-crossing',
-                'price' => '39,99',
-                'image' => 'https://cdn.cloudflare.steamstatic.com/steam/apps/1072270/header.jpg',
-                'badge' => null
-            ],
-            [
-                'id' => 5,
-                'title' => 'The Witcher 3',
-                'slug' => 'the-witcher-3',
-                'price' => '29,99',
-                'image' => 'https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg',
-                'badge' => 'Best-seller'
-            ],
-            [
-                'id' => 6,
-                'title' => 'Cyberpunk 2077',
-                'slug' => 'cyberpunk-2077',
-                'price' => '49,99',
-                'image' => 'https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg',
-                'badge' => null
-            ],
-        ];
+        $query = Produit::with(['categorie', 'plateforme'])->where('is_active', true);
 
-        return view('games.index', compact('games'));
+        // Filter by category
+        if ($request->filled('categorie')) {
+            $query->whereHas('categorie', function ($q) use ($request) {
+                $q->where('slug', $request->categorie);
+            });
+        }
+
+        // Filter by platform
+        if ($request->filled('plateforme')) {
+            $query->whereHas('plateforme', function ($q) use ($request) {
+                $q->where('slug', $request->plateforme);
+            });
+        }
+
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nom', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Sort
+        $sort = $request->get('tri', 'recent');
+        switch ($sort) {
+            case 'prix_asc': $query->orderBy('prix', 'asc'); break;
+            case 'prix_desc': $query->orderBy('prix', 'desc'); break;
+            case 'nom': $query->orderBy('nom', 'asc'); break;
+            default: $query->orderBy('created_at', 'desc');
+        }
+
+        $produits = $query->paginate(12);
+        $categories = CategorieProduit::withCount('produits')->get();
+        $plateformes = Plateforme::all();
+
+        return view('games.index', compact('produits', 'categories', 'plateformes'));
+    }
+
+    public function show($slug)
+    {
+        $produit = Produit::with(['categorie', 'plateforme', 'commentaires.user'])
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        $similaires = Produit::where('categorie_id', $produit->categorie_id)
+            ->where('id', '!=', $produit->id)
+            ->where('is_active', true)
+            ->take(4)
+            ->get();
+
+        return view('games.show', compact('produit', 'similaires'));
     }
 }

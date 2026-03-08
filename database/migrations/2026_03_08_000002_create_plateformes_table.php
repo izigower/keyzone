@@ -6,22 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('ligne_panier', function (Blueprint $table) {
+        Schema::create('plateformes', function (Blueprint $table) {
             $table->id();
+            $table->string('nom')->unique();
+            $table->string('slug')->unique();
+            $table->string('icone')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('ligne_panier');
+        Schema::dropIfExists('plateformes');
     }
 };
