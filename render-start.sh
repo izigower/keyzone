@@ -3,6 +3,11 @@ set -eu
 
 mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache
 
+# Generate APP_KEY if not set
+if [ -z "${APP_KEY:-}" ]; then
+    php artisan key:generate --force
+fi
+
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
