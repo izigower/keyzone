@@ -102,13 +102,13 @@
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 1400px;
-            margin: 0 auto;
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .hero-content.no-cards {
@@ -1000,7 +1000,7 @@
         }
 
         .steps-grid {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1041,7 +1041,7 @@
         }
 
         .step-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.6rem;
             color: #e2e8f0;
@@ -1065,7 +1065,7 @@
         }
 
         .cta-box {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(20, 20, 40, 0.8) 100%);
             border: 1px solid rgba(139, 92, 246, 0.2);
