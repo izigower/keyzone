@@ -9,43 +9,15 @@
 /* =============================== */
 .hero {
     position: relative;
-    min-height: 90vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
-    margin-top: 0;
-    padding: 8rem 5% 5rem;
-}
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #0d0221 0%, #150535 30%, #0a0a1a 70%, #000 100%);
-    z-index: 0;
-}
-.hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+    margin-top: 70px;
+    padding: 16rem 8% 10rem;
 }
 
-/* Animated particles */
-.particles {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow: hidden;
-}
-.particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: rgba(139, 92, 246, 0.6);
-    animation: float-particle linear infinite;
-}
+
+
 @keyframes float-particle {
     0% { transform: translateY(100vh) scale(0); opacity: 0; }
     10% { opacity: 1; }
@@ -71,13 +43,14 @@
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 1400px;
     margin: 0 auto;
+    padding: 5rem 8%;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    background: linear-gradient(135deg, #0d0221 0%, #150535 30%, #0a0a1a 70%, #000 100%);
 }
 .hero-text { max-width: 650px; }
 .hero-badge {
@@ -130,7 +103,6 @@
     color: #94a3b8;
     line-height: 1.7;
     margin-bottom: 2.5rem;
-    max-width: 500px;
     animation: fadeInUp 0.8s ease 0.2s both;
 }
 .hero-actions {
@@ -315,13 +287,9 @@
 /*  CATEGORIES BAR                 */
 /* =============================== */
 .categories-bar {
-    background: rgba(15, 15, 30, 0.8);
-    border-top: 1px solid rgba(139, 92, 246, 0.1);
-    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-    padding: 1.5rem 5%;
+    padding: 5rem 8%;
 }
 .categories-inner {
-    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     gap: 1rem;
@@ -365,20 +333,13 @@
 /*  TRENDING SECTION               */
 /* =============================== */
 .section-trending {
-    padding: 5rem 5%;
+    padding: 5rem 8%;
     position: relative;
 }
 .section-trending::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: linear-gradient(180deg, rgba(139, 92, 246, 0.03) 0%, transparent 100%);
+    display: none;
 }
 .section-header {
-    max-width: 1400px;
     margin: 0 auto 3rem;
     display: flex;
     justify-content: space-between;
@@ -420,7 +381,6 @@
 
 /* Game cards */
 .games-grid {
-    max-width: 1400px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -580,7 +540,7 @@
 /*  WHY CHOOSE US                  */
 /* =============================== */
 .section-why {
-    padding: 6rem 5%;
+    padding: 5rem 8%;
     background: linear-gradient(180deg, #0a0a0f 0%, rgba(15, 10, 40, 0.5) 50%, #0a0a0f 100%);
     position: relative;
     overflow: hidden;
@@ -596,7 +556,6 @@
     right: -200px;
 }
 .why-grid {
-    max-width: 1400px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -672,8 +631,7 @@
     position: relative;
 }
 .section-testimonials .section-header {
-    padding: 0 5%;
-    margin-bottom: 3rem;
+    padding: 1rem 8%;
 }
 .testimonial-marquee-container {
     position: relative;
@@ -772,11 +730,10 @@
 /*  HOW IT WORKS                   */
 /* =============================== */
 .section-steps {
-    padding: 6rem 5%;
+    padding: 5rem 8%;
     position: relative;
 }
 .steps-grid {
-    max-width: 1100px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -786,7 +743,7 @@
 .steps-grid::before {
     content: '';
     position: absolute;
-    top: 50px;
+    top: 30px;
     left: 16.5%;
     right: 16.5%;
     height: 2px;
@@ -822,7 +779,6 @@
     color: #94a3b8;
     font-size: 0.95rem;
     line-height: 1.6;
-    max-width: 280px;
     margin: 0 auto;
 }
 
@@ -830,12 +786,11 @@
 /*  CTA SECTION                    */
 /* =============================== */
 .section-cta {
-    padding: 6rem 5%;
+    padding: 5rem 8%;
     position: relative;
     overflow: hidden;
 }
 .cta-box {
-    max-width: 1000px;
     margin: 0 auto;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(20, 20, 40, 0.8) 100%);
     border: 1px solid rgba(139, 92, 246, 0.2);
@@ -868,7 +823,6 @@
     color: #94a3b8;
     font-size: 1.1rem;
     margin-bottom: 2.5rem;
-    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -903,7 +857,6 @@
 {{-- ===== HERO SECTION ===== --}}
 <section class="hero">
     <div class="hero-bg">
-        <div class="particles" id="particles"></div>
         <div class="geo-shape" style="width: 200px; height: 200px; top: 10%; left: 5%; animation-delay: 0s;"></div>
         <div class="geo-shape" style="width: 120px; height: 120px; top: 60%; right: 10%; animation-delay: -5s; border-color: rgba(236, 72, 153, 0.1);"></div>
         <div class="geo-shape" style="width: 80px; height: 80px; bottom: 15%; left: 30%; animation-delay: -10s;"></div>
@@ -1049,7 +1002,7 @@
 
 {{-- ===== WHY CHOOSE US ===== --}}
 <section class="section-why">
-    <div class="section-header" style="max-width: 1400px; margin: 0 auto 3.5rem; padding: 0;">
+    <div class="section-header" style="margin: 0 auto 3.5rem; padding: 0;">
         <div>
             <h2><span class="section-icon"><i class="fas fa-shield-alt"></i></span>POURQUOI KEYZONE ?</h2>
             <p style="color: #94a3b8; margin-top: 0.5rem; font-size: 1rem;">La marketplace de confiance pour vos cles de jeux video</p>
@@ -1192,25 +1145,6 @@
 
 @push('scripts')
 <script>
-// ===== PARTICLE SYSTEM =====
-(function() {
-    const container = document.getElementById('particles');
-    if (!container) return;
-    const count = 30;
-    for (let i = 0; i < count; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
-        p.style.animationDuration = (Math.random() * 15 + 10) + 's';
-        p.style.animationDelay = (Math.random() * 10) + 's';
-        p.style.background = Math.random() > 0.5
-            ? 'rgba(139, 92, 246, ' + (Math.random() * 0.5 + 0.2) + ')'
-            : 'rgba(236, 72, 153, ' + (Math.random() * 0.3 + 0.1) + ')';
-        container.appendChild(p);
-    }
-})();
-
 // ===== COUNT-UP ANIMATION =====
 (function() {
     const counters = document.querySelectorAll('.hero-stat-number[data-count]');
