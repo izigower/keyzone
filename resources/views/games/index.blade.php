@@ -231,24 +231,73 @@
         box-shadow: 0 5px 20px rgba(139, 92, 246, 0.3);
     }
 
-    /* Pagination */
+    /* Pagination - Override Tailwind */
     .pagination-container {
         margin-top: 3rem;
         display: flex;
         justify-content: center;
     }
-    .pagination-container nav { display: flex; gap: 0.3rem; }
-    .pagination-container .relative.inline-flex { display: none; }
-    .pagination-container span[aria-current], .pagination-container a {
-        padding: 0.5rem 1rem;
+    .pagination-container nav { 
+        display: flex; 
+        gap: 0.3rem; 
+        align-items: center;
+    }
+    
+    /* Cacher les éléments Tailwind par défaut */
+    .pagination-container .relative.inline-flex,
+    .pagination-container .flex.gap-2,
+    .pagination-container .hidden,
+    .pagination-container p.text-sm {
+        display: none !important;
+    }
+    
+    /* Style des liens de pagination */
+    .pagination-container a,
+    .pagination-container span[aria-current="page"] span,
+    .pagination-container span[aria-disabled="true"] span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.6rem 1rem;
+        min-width: 40px;
+        min-height: 40px;
         border-radius: 8px;
         font-size: 0.9rem;
         font-weight: 600;
         transition: all 0.3s;
+        text-decoration: none;
+        border: 1px solid rgba(139, 92, 246, 0.2);
     }
-    .pagination-container span[aria-current] {
-        background: #8b5cf6;
+    
+    /* Liens normaux */
+    .pagination-container a {
+        background: rgba(20, 20, 40, 0.6);
+        color: #94a3b8;
+    }
+    .pagination-container a:hover {
+        background: rgba(139, 92, 246, 0.2);
+        color: #c4b5fd;
+        border-color: rgba(139, 92, 246, 0.4);
+    }
+    
+    /* Page active */
+    .pagination-container span[aria-current="page"] span {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
         color: #fff;
+        border-color: #8b5cf6;
+    }
+    
+    /* Bouton désactivé (Previous/Next) */
+    .pagination-container span[aria-disabled="true"] span {
+        background: rgba(20, 20, 40, 0.3);
+        color: #4b5563;
+        cursor: not-allowed;
+    }
+    
+    /* Flèches Previous/Next */
+    .pagination-container svg {
+        width: 20px;
+        height: 20px;
     }
 
     /* Empty state */
