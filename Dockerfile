@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    nodejs \
-    npm \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
     pdo_pgsql \
@@ -42,8 +40,7 @@ COPY . .
 # Run post-install scripts
 RUN composer dump-autoload --optimize
 
-# Build frontend assets (Vite + Tailwind CSS)
-RUN npm install && npm run build
+# Build frontend assets (Vite + Tailwind CSS) removed as project is pure Laravel with Blade templates
 
 # Set permissions for storage and cache
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
