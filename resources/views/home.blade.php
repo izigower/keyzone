@@ -140,6 +140,7 @@
 
         .hero-text {
             max-width: 650px;
+            padding-left: 3rem;
         }
 
         .hero-badge {

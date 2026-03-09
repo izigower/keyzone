@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin KEYZONE</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .step { background: #f3f4f6; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .step h3 { margin-top: 0; color: #8b5cf6; }
+        code { background: #e5e7eb; padding: 2px 6px; border-radius: 4px; }
+        .ok { color: #10b981; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🎮 Test Admin KEYZONE</h1>
+    
+    <div class="step">
+        <h3>1. Tester la connexion admin</h3>
+        <p>Va sur : <a href="https://keyzone-glzc.onrender.com/login" target="_blank">https://keyzone-glzc.onrender.com/login</a></p>
+        <p>Connecte-toi avec :</p>
+        <ul>
+            <li>Email : <code>admin@keyzone.fr</code></li>
+            <li>Mot de passe : <code>Admin123!</code></li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>2. Vérifier l'accès admin</h3>
+        <p>Après connexion, tu dois voir <strong>"Administration"</strong> dans le menu déroulant (clique sur ton nom).</p>
+        <p>Ou va directement : <a href="https://keyzone-glzc.onrender.com/admin" target="_blank">/admin</a></p>
+    </div>
+
+    <div class="step">
+        <h3>3. Tester un user normal</h3>
+        <p>Crée un compte utilisateur normal et vérifie que :</p>
+        <ul>
+            <li>Tu reçois l'email (même fake)</li>
+            <li>Au bout de 10s, tu peux te connecter</li>
+            <li>Tu n'as PAS accès à l'admin</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>4. Pour voir la BDD (optionnel)</h3>
+        <p>Render n'a pas d'interface, mais tu peux utiliser :</p>
+        <ul>
+            <li><strong>TablePlus</strong> (gratuit, le plus simple)</li>
+            <li><strong>DBeaver</strong> (gratuit, complet)</li>
+            <li><strong>pgAdmin</strong> (officiel PostgreSQL)</li>
+        </ul>
+        <p>Connection string :</p>
+        <code>postgresql://keyzone_user:dc7Z4fNlh3z0OwdgjzrIpdDK2mYZXmWY@dpg-d6n7fnnkijhs73a8gkrg-a/keyzone</code>
+    </div>
+
+    <div class="step">
+        <h3>✅ Si ça marche, t'es bon !</h3>
+        <p class="ok">Tu as un e-commerce fonctionnel avec :</p>
+        <ul>
+            <li>✅ Authentification (vérification email auto)</li>
+            <li>✅ Panier et paiement Stripe (test)</li>
+            <li>✅ Panel admin complet</li>
+            <li>✅ BDD PostgreSQL professionnelle</li>
+        </ul>
+    </div>
+</body>
+</html>
