@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class VerificationController extends Controller
 {
@@ -15,8 +17,14 @@ class VerificationController extends Controller
 
     public function verify(Request $request, $id, $hash)
     {
-        $user = \App\Models\User::findOrFail($id);
+        // Vérifier la signature de l'URL
+        if (!URL::hasValidSignature($request)) {
+            return redirect()->route('login')->with('error', 'Lien de vérification invalide ou expiré.');
+        }
 
+        $user = User::findOrFail($id);
+
+        // Vérifier que le hash correspond à l'email de l'utilisateur
         if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
             return redirect()->route('login')->with('error', 'Lien de vérification invalide.');
         }
@@ -28,7 +36,8 @@ class VerificationController extends Controller
         $user->markEmailAsVerified();
         event(new \Illuminate\Auth\Events\Verified($user));
 
-        \Illuminate\Support\Facades\Auth::login($user);
+        // Connecter l'utilisateur automatiquement après vérification
+        Auth::login($user);
 
         return redirect()->route('home')->with('success', 'Email vérifié avec succès ! Vous êtes connecté.');
     }
