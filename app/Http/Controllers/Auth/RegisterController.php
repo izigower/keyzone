@@ -37,7 +37,6 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
             'date_naissance' => $validated['date_naissance'],
         ]);
-
         event(new Registered($user));
         Auth::login($user);
 
