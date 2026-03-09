@@ -33,6 +33,12 @@
             font-size: 28px;
         }
 
+        .success-icon {
+            font-size: 60px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
         .btn-verify {
             display: inline-block;
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
@@ -50,13 +56,6 @@
             font-size: 12px;
             margin-top: 30px;
         }
-
-        .small-url {
-            color: #a78bfa;
-            font-size: 11px;
-            word-break: break-all;
-            margin-top: 15px;
-        }
     </style>
 </head>
 
@@ -64,23 +63,23 @@
     <div class="container">
         <div class="header">
             <h1>KEYZONE</h1>
-            <p style="color: #94a3b8;">Vérifiez votre adresse email</p>
+            <p style="color: #94a3b8;">Vérification d'email</p>
         </div>
+
+        <div class="success-icon">✅</div>
 
         <p>Bonjour {{ $user->username ?? 'Cher joueur' }},</p>
-        <p style="color: #a1a1aa;">Merci de vous être inscrit sur KEYZONE ! Veuillez cliquer sur le bouton ci-dessous
-            pour vérifier votre adresse email et finaliser votre inscription.</p>
+        
+        <p style="color: #a1a1aa; font-size: 16px; line-height: 1.6;">
+            <strong>Merci d'avoir vérifié votre adresse email !</strong>
+        </p>
+
+        <p style="color: #a1a1aa;">
+            Votre compte est maintenant activé. Vous pouvez dès maintenant vous connecter et profiter de tous nos jeux.
+        </p>
 
         <div style="text-align: center;">
-            <a href="{{ $url }}" class="btn-verify">Vérifier mon adresse email</a>
-        </div>
-
-        <p style="color: #a1a1aa;">Si vous n'avez pas créé de compte, aucune action supplémentaire n'est requise.</p>
-
-        <div class="small-url">
-            <p>Si vous rencontrez des problèmes en cliquant sur le bouton, copiez et collez l'URL suivante dans votre
-                navigateur web :</p>
-            <p><a href="{{ $url }}" style="color: #a78bfa;">{{ $url }}</a></p>
+            <a href="{{ url('/login') }}" class="btn-verify">Se connecter</a>
         </div>
 
         <div class="footer">

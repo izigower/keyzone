@@ -32,11 +32,11 @@ class AppServiceProvider extends ServiceProvider
             \Illuminate\Http\Request::HEADER_X_FORWARDED_PROTO
         );
 
-        // Personnaliser l'email de vérification
+        // Personnaliser l'email de vérification (sans lien - auto-vérification après 10s)
         \Illuminate\Auth\Notifications\VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new \Illuminate\Notifications\Messages\MailMessage)
-                ->subject('Vérifiez votre adresse email')
-                ->view('emails.verify-email', ['url' => $url, 'user' => $notifiable]);
+                ->subject('Bienvenue sur KEYZONE - Email confirmé')
+                ->view('emails.verify-email', ['user' => $notifiable]);
         });
     }
 }
