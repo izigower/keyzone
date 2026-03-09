@@ -276,11 +276,10 @@
         footer.main-footer {
             background: #060609;
             border-top: 1px solid rgba(139, 92, 246, 0.08);
-            padding: 5rem 5% 2rem;
+            padding: 5rem 8% 10rem;
             margin-top: auto;
         }
         .footer-content {
-            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -340,7 +339,6 @@
             box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
         .footer-bottom {
-            max-width: 1400px;
             margin: 0 auto;
             padding-top: 2rem;
             border-top: 1px solid rgba(139, 92, 246, 0.06);
@@ -591,7 +589,6 @@
                 <div class="social-links">
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
                     <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
