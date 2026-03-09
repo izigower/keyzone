@@ -45,9 +45,6 @@ RUN composer dump-autoload --optimize
 # Build frontend assets (Vite + Tailwind CSS)
 RUN npm install && npm run build
 
-# Create .env from example if not present
-RUN cp .env.example .env || true
-
 # Set permissions for storage and cache
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
