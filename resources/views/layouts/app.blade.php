@@ -13,11 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -61,6 +57,7 @@
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -358,7 +355,7 @@
         .footer-section h4 {
             color: #e2e8f0;
             margin-bottom: 1.5rem;
-            font-size: 0.85rem;
+            font-size: 1.1rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -390,7 +387,7 @@
         .footer-brand h3 {
             font-size: 2rem;
             margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #fff 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -414,12 +411,12 @@
             width: 42px;
             height: 42px;
             background: rgba(139, 92, 246, 0.08);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            border-radius: 10px;
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #64748b;
+            color: #c4b5fd;
             transition: all 0.3s;
             font-size: 1rem;
         }
