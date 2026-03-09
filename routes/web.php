@@ -32,13 +32,11 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 // ========== EMAIL VERIFICATION ==========
-Route::middleware('auth')->group(function () {
-    Route::get('/email/verify', [VerificationController::class, 'notice'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
-        ->middleware('signed')->name('verification.verify');
-    Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
-        ->middleware('throttle:6,1')->name('verification.send');
-});
+Route::get('/email/verify', [VerificationController::class, 'notice'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+    ->middleware('signed')->name('verification.verify');
+Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
+    ->middleware('throttle:6,1')->name('verification.send');
 
 // ========== GAMES (PUBLIC) ==========
 Route::get('/jeux', [GameController::class, 'index'])->name('games.index');

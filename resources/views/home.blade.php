@@ -1580,7 +1580,11 @@
 
                 fetch(this.action, {
                     method: 'POST',
-                    headers: { 'X-CSRF-TOKEN': window.csrfToken, 'Accept': 'application/json' },
+                    headers: {
+                        'X-CSRF-TOKEN': window.csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
                     body: new FormData(this),
                 })
                     .then(r => r.json())

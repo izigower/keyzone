@@ -13,10 +13,24 @@ class VerificationController extends Controller
         return view('auth.verify-email');
     }
 
-    public function verify(EmailVerificationRequest $request)
+    public function verify(Request $request, $id, $hash)
     {
-        $request->fulfill();
-        return redirect()->route('home')->with('success', 'Email vérifié avec succès !');
+        $user = \App\Models\User::findOrFail($id);
+
+        if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+            return redirect()->route('login')->with('error', 'Lien de vérification invalide.');
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return redirect()->route('login')->with('success', 'Votre email est déjà vérifié. Vous pouvez vous connecter.');
+        }
+
+        $user->markEmailAsVerified();
+        event(new \Illuminate\Auth\Events\Verified($user));
+
+        \Illuminate\Support\Facades\Auth::login($user);
+
+        return redirect()->route('home')->with('success', 'Email vérifié avec succès ! Vous êtes connecté.');
     }
 
     public function resend(Request $request)
