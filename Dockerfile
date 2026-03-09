@@ -6,9 +6,12 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
     libicu-dev \
+    libsqlite3-dev \
     unzip \
     git \
     curl \
+    nodejs \
+    npm \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
     pdo_pgsql \
@@ -28,7 +31,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy composer files first (for better Docker layer caching)
-COPY composer.json composer.lock ./
+COPY composer.json composer.lock* ./
 
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev --no-scripts
@@ -39,21 +42,21 @@ COPY . .
 # Run post-install scripts
 RUN composer dump-autoload --optimize
 
-# Create .env from example if not present, generate key
+# Build frontend assets (Vite + Tailwind CSS)
+RUN npm install && npm run build
+
+# Create .env from example if not present
 RUN cp .env.example .env || true
 
 # Set permissions for storage and cache
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Expose port (Render sets PORT env var)
-EXPOSE 8000
+# Copy start script
+COPY render-start.sh /usr/local/bin/render-start.sh
+RUN chmod +x /usr/local/bin/render-start.sh
 
-# Start script: clear caches, run migrations, seed, then serve
-CMD sh -c "\
-    php artisan config:clear && \
-    php artisan route:clear && \
-    php artisan view:clear && \
-    php artisan migrate --force && \
-    php artisan db:seed --force && \
-    php artisan serve --host=0.0.0.0 --port=\${PORT:-8000}"
+# Expose port (Render sets PORT env var)
+EXPOSE 10000
+
+CMD ["sh", "/usr/local/bin/render-start.sh"]
