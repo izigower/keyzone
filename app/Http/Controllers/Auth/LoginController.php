@@ -36,6 +36,11 @@ class LoginController extends Controller
                 return back()->withErrors(['email' => 'Votre compte a été désactivé.'])->onlyInput('email');
             }
 
+            if (!$user->hasVerifiedEmail()) {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Veuillez vérifier votre adresse email avant de vous connecter.'])->onlyInput('email');
+            }
+
             $request->session()->regenerate();
             return redirect()->intended('/');
         }

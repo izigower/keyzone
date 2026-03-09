@@ -38,9 +38,10 @@ class RegisterController extends Controller
             'date_naissance' => $validated['date_naissance'],
         ]);
         event(new Registered($user));
-        Auth::login($user);
 
-        return redirect()->route('verification.notice')
-            ->with('success', 'Compte créé ! Veuillez vérifier votre email.');
+        // On ne connecte plus automatiquement l'utilisateur après l'inscription
+        // Auth::login($user);
+
+        return redirect()->route('login')->with('success', 'Inscription réussie ! Veuillez vérifier votre boîte mail pour activer votre compte.');
     }
 }
