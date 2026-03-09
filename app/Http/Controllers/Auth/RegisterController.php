@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Jobs\VerifyEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,11 +38,13 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
             'date_naissance' => $validated['date_naissance'],
         ]);
-        event(new Registered($user));
+        
+        // Envoyer l'email de confirmation (cosmétique)
+        $user->sendEmailVerificationNotification();
+        
+        // Dispatch le job pour vérifier l'email après 10 secondes (après la réponse HTTP)
+        VerifyEmailJob::dispatchAfterResponse($user->id);
 
-        // On ne connecte plus automatiquement l'utilisateur après l'inscription
-        // Auth::login($user);
-
-        return redirect()->route('login')->with('success', 'Inscription réussie ! Veuillez vérifier votre boîte mail pour activer votre compte.');
+        return redirect()->route('login')->with('success', 'Inscription réussie ! Un email de confirmation vous a été envoyé.');
     }
 }
